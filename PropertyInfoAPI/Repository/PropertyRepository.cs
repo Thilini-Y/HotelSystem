@@ -38,8 +38,8 @@ namespace PropertyInfoAPI.Repository
 
         public async Task<PropertyModel> GetPropertyByIdAsync(int id)
         {
-            var Feature = await _context.Property.FindAsync(id);
-            return _mapper.Map<PropertyModel>(Feature);
+            var property = await _context.Property.FindAsync(id);
+            return _mapper.Map<PropertyModel>(property);
         }
 
         public async Task<int> AddPropertyAsync(PropertyModel propertyModel)

@@ -39,14 +39,14 @@ namespace PropertyInfoAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPropertyById([FromRoute] int id)
         {
-            var feature = await _propertyRepository.GetPropertyByIdAsync(id);
-            if (feature == null)
+            var property = await _propertyRepository.GetPropertyByIdAsync(id);
+            if (property == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(feature);
+                return Ok(property);
             }
         }
 
