@@ -141,5 +141,11 @@ namespace ReservationAPI.Repository
 
             }
         }
+
+        public async Task<List<ReservationModel>> FindUnconflictReservations(DateModel dates)
+        {
+            var records = await _context.Reservations.Where(x => x.StartDate > dates.endDate || x.EndDate < dates.startDate).ToListAsync();
+            return _mapper.Map<List<ReservationModel>>(records);
+        }
     }
 }

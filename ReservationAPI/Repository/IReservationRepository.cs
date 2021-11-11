@@ -19,5 +19,7 @@ namespace ReservationAPI.Repository
         Task<bool> DeleteReservationAsync(int id);
 
         Task<bool> ChangeStatusAsync(int _reservationId, string _status);
+
+        Task<List<ReservationModel>> FindUnconflictReservations(DateModel dates);
     }
 }

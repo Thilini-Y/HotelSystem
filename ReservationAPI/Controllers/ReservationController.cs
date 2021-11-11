@@ -22,17 +22,17 @@ namespace ReservationAPI.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetAllReservations()
+        public async Task<List<ReservationModel>> GetAllReservations()
         {
             var reservations = await _reservationRepository.getAllReservationAsync();
 
             if (reservations != null)
             {
-                return Ok(reservations);
+                return reservations;
             }
             else
             {
-                return StatusCode(500, "Data is not available!");
+                return null;
             }
 
         }
@@ -220,6 +220,30 @@ namespace ReservationAPI.Controllers
             {
                 return StatusCode(500, "Requested data in not in the database");
             }
+        }
+
+        [HttpPost("unavailablerooms")]
+        public async Task<List<int>> UnavailableRooms([FromBody] DateModel dates)
+        {
+            var unconflictReservations = await _reservationRepository.FindUnconflictReservations(dates);
+            
+
+            List<ReservationModel> unconflictReservationsList = unconflictReservations.ToList();
+
+            var allreservations = await GetAllReservations();
+            List<ReservationModel> allreservationsList = allreservations.ToList();
+
+            List<ReservationModel> conflictReservations = allreservationsList.Where(p => !unconflictReservationsList.Any(x => x.ReservationId == p.ReservationId)).ToList();
+
+
+            List<int> unavailableRoomIds = new List<int>();
+            foreach (ReservationModel item in conflictReservations)
+            {
+                unavailableRoomIds.Add(item.RoomId);
+
+            }
+            return unavailableRoomIds;
+            
         }
 
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace RoomInfoAPI.Helpers
@@ -58,6 +59,25 @@ namespace RoomInfoAPI.Helpers
                 }
             }
             return featureDetails;
+        }
+
+       
+        public async Task<List<int>> UnavailableRoom(DateModel content)
+        {
+            List<int> unavailableRoomlist = new List<int>();
+            using (var client = new HttpClient())
+            {
+                
+                using (var response = await client.PostAsJsonAsync("https://localhost:44305/api/reservation/unavailablerooms", content))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    unavailableRoomlist = JsonConvert.DeserializeObject<List<int>>(apiResponse);
+                    
+                }
+
+            }
+
+            return unavailableRoomlist;
         }
 
 

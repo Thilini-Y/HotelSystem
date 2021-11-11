@@ -212,5 +212,38 @@ namespace RoomInfoAPI.Controllers
                 return StatusCode(500, "Requested data in not in the database");
             }
         }
+
+        [HttpPost("availablerooms")]
+        public async Task<object> AvailableRooms([FromBody] DateModel dates)
+        {
+
+            CallingHelper helper = new CallingHelper();
+            List<int> unavailableRoomIds = await helper.UnavailableRoom(dates);
+
+            var allRooms = await GetAllRooms();
+            List<RoomModel> allRoomList = allRooms.ToList();
+            List<int> allRoomIds = new List<int>();
+            foreach (RoomModel item in allRoomList)
+            {
+                allRoomIds.Add(item.RoomId);
+
+            }
+
+
+            List<int> availableRoomIds = allRoomIds.Except(unavailableRoomIds).ToList();
+
+            List<RoomModel> availableRoomDetailsList = new List<RoomModel>();
+
+            foreach (int id in availableRoomIds)
+            {
+                RoomModel roomDetails = await GetRoomById(id);
+                availableRoomDetailsList.Add(roomDetails);
+            }
+            
+
+            return availableRoomDetailsList;
+        }
+
+
     }
 }
