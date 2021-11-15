@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ReservationAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,18 @@ namespace ReservationAPI.Helpers
 
         }
 
+        public static string urlJsonString = System.IO.File.ReadAllText("ServerUrls.json");
+        public static JObject urlJObject = JObject.Parse(urlJsonString);
+
         public async Task<ContactModel> CallConactByIdUrl(int id)
         {
             ContactModel contact = new ContactModel();
+            string contactUrl = urlJObject.SelectToken("ContactByID").Value<string>();
+
+
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44311/api/contact/" + id))
+                using (var response = await httpClient.GetAsync(contactUrl + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     contact = JsonConvert.DeserializeObject<ContactModel>(apiResponse);
@@ -35,9 +42,11 @@ namespace ReservationAPI.Helpers
         {
 
             RoomModel roomObject = new RoomModel();
+            string roomUrl = urlJObject.SelectToken("RoomByID").Value<string>();
+
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44333/api/room/" + id))
+                using (var response = await httpClient.GetAsync(roomUrl + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     roomObject = JsonConvert.DeserializeObject<RoomModel>(apiResponse);
@@ -52,9 +61,11 @@ namespace ReservationAPI.Helpers
         {
 
             PropertyModel propertyObject = new PropertyModel();
+            string propertyUrl = urlJObject.SelectToken("PropertyByID").Value<string>();
+
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:44359/api/property/" + id))
+                using (var response = await httpClient.GetAsync(propertyUrl + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     propertyObject = JsonConvert.DeserializeObject<PropertyModel>(apiResponse);
@@ -68,9 +79,11 @@ namespace ReservationAPI.Helpers
         public async Task<bool> CallOccupiedRoom(int id)
         {
             bool roomResponse;
+            string OccupiedRoomUrl = urlJObject.SelectToken("OccupiedRoomIDs").Value<string>();
+
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PutAsync("https://localhost:44333/api/room/occupied/" + id,null))
+                using (var response = await httpClient.PutAsync(OccupiedRoomUrl + id,null))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                    roomResponse = JsonConvert.DeserializeObject<bool>(apiResponse);
@@ -83,9 +96,11 @@ namespace ReservationAPI.Helpers
         public async Task<bool> CallDirtyRoom(int id)
         {
             bool roomResponse;
+            string dirtyRoomUrl = urlJObject.SelectToken("DirtyRoomIDs").Value<string>();
+
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PutAsync("https://localhost:44333/api/room/dirty/" + id, null))
+                using (var response = await httpClient.PutAsync(dirtyRoomUrl + id, null))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     roomResponse = JsonConvert.DeserializeObject<bool>(apiResponse);

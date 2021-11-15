@@ -1,0 +1,9 @@
+{
+  "PropertyByID": "https://localhost:44359/api/property/",
+
+  "PriceByID": "https://localhost:44313/api/price/",
+
+  "FeaturesByID": "https://localhost:44310/api/features/",
+
+  "UnavailableRoomIds": "https://localhost:44305/api/reservation/unavailablerooms"
+}

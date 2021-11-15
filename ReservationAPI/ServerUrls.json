@@ -1,0 +1,11 @@
+{
+  "ContactByID": "https://localhost:44311/api/contact/",
+
+  "RoomByID": "https://localhost:44333/api/room/",
+
+  "PropertyByID": "https://localhost:44359/api/property/",
+
+  "OccupiedRoomIDs": "https://localhost:44333/api/room/occupied/",
+
+  "DirtyRoomIDs": "https://localhost:44333/api/room/dirty/"
+}

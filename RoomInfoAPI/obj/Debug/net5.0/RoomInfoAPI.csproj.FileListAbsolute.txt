@@ -60,3 +60,4 @@ D:\miniproject\HotelSystem\HostelSystem\RoomInfoAPI\obj\Debug\net5.0\RoomInfoAPI
 D:\miniproject\HotelSystem\HostelSystem\RoomInfoAPI\obj\Debug\net5.0\RoomInfoAPI.genruntimeconfig.cache
 D:\miniproject\HotelSystem\HostelSystem\RoomInfoAPI\bin\Debug\net5.0\AutoMapper.dll
 D:\miniproject\HotelSystem\HostelSystem\RoomInfoAPI\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\miniproject\HotelSystem\HostelSystem\RoomInfoAPI\bin\Debug\net5.0\ServerUrls.json
